@@ -16,7 +16,7 @@ def main():
 
     sol_1, n1 = bisection(f, 0, 100)
     sol_2, n2 = regula_falsi(f, 0, 100)
-    sol_3, n3 = newton(f, f_deriv, 100)
+    sol_3, n3 = newton_raphson(f, f_deriv, 100)
     sol_4, n4 = secant(f, -100, 100)
 
     print(f"bisection: {sol_1:.2f} in {n1} iterations")
@@ -66,7 +66,7 @@ def regula_falsi(f, xl, xu, tol=1e-9, max_iter=10000):
         n += 1
     return xr, n
 
-def newton(f, df, initial_guess, tolerance=1e-9, max_iter=10000):
+def newton_raphson(f, df, initial_guess, tolerance=1e-9, max_iter=10000):
     '''Ex3: Newton Ralphson Method'''
     n = 0
     x_current = initial_guess
