@@ -68,18 +68,22 @@ def gauss_seidel(A, b, x, tol):
         x = x_new
     return x
 
-def jacobi(A, b, x, tol):
-    rows, cols = A.shape
-    while True:
-        x_new = np.copy(x)
-        for i in range(rows):
-            sum1 = np.dot(A[i, :i], x[:i])
-            sum2 = np.dot(A[i, i+1:], x[i+1:])
-            x_new[i] = (b[i] - sum1 - sum2) / A[i, i]
-        if np.linalg.norm(x_new - x) < tol:
+
+def jacobi(A, b, x, tol, max_iter=1000):
+    D_inv = np.diag(1 / np.diag(A))
+    L_U = A - np.diagflat(np.diag(A))
+    
+    iterations = 0
+    while iterations < max_iter:
+        x_new = np.dot(D_inv, b - np.dot(L_U, x))
+        
+        if np.all(np.abs(x_new - x) / np.abs(x_new) <= tol):
             break
+        
         x = x_new
-    return x
+        iterations += 1
+    
+    return x_new
 
 
 if __name__=='__main__':
