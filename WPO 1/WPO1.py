@@ -1,7 +1,9 @@
+'''------IMPORT MODULES----- '''
 import matplotlib.pyplot as plt
 import numpy as np
 
 
+'''------MAIN CODE------'''
 def main():
     """ Ilya De Groeve, Arne De Weerdt"""
     g = 9.81
@@ -15,17 +17,25 @@ def main():
     sol_1, n1 = bisection(f, 0, 100)
     sol_2, n2 = regula_falsi(f, 0, 100)
     sol_3, n3 = newton(f, f_deriv, 100)
-    sol_4, n4 = secant(f, 6, 100)
+    sol_4, n4 = secant(f, -100, 100)
 
-    print(f"bisection: {sol_1} in {n1} iterations")
-    print(f"Regula Falsi: {sol_2} in {n2} iterations")
-    print(f"Newton Ralphson: {sol_3} in {n3} iterations")
-    print(f"Secant: {sol_4} in {n4} iterations")
+    print(f"bisection: {sol_1:.2f} in {n1} iterations")
+    print(f"Regula Falsi: {sol_2:.2f} in {n2} iterations")
+    print(f"Newton Ralphson: {sol_3:.2f} in {n3} iterations")
+    print(f"Secant: {sol_4:.2f} in {n4} iterations")
 
+
+
+
+
+'''------FUNCTIONS-------'''
 
 def bisection(f, xl, xu, tol=1e-9, max_iter=10000):
+    '''Ex1: Bisection Method'''
+
     if f(xl) * f(xu) >= 0:
         print("There is no root between these points.")
+        return None, None
     n = 0
     while n < max_iter:
         xr = (xl + xu) / 2
@@ -39,8 +49,11 @@ def bisection(f, xl, xu, tol=1e-9, max_iter=10000):
     return xr, n
 
 def regula_falsi(f, xl, xu, tol=1e-9, max_iter=10000):
+    '''Ex2: Regula Falsi Method'''
+
     if f(xl) * f(xu) >= 0:
         print("There is no root between these points.")
+        return None, None
     n = 0
     while n < max_iter:
         xr = xu - f(xu)*(xl-xu)/(f(xl)-f(xu))
@@ -54,6 +67,7 @@ def regula_falsi(f, xl, xu, tol=1e-9, max_iter=10000):
     return xr, n
 
 def newton(f, df, initial_guess, tolerance=1e-9, max_iter=10000):
+    '''Ex3: Newton Ralphson Method'''
     n = 0
     x_current = initial_guess
 
@@ -66,6 +80,7 @@ def newton(f, df, initial_guess, tolerance=1e-9, max_iter=10000):
     return x_next, n
 
 def secant(f, x0, x1, tol=1e-9, max_iter=10000):
+    ''' Ex4: Secant Method'''
     x_0 = x0
     x_1 = x1
     n = 0
@@ -88,9 +103,7 @@ def secant(f, x0, x1, tol=1e-9, max_iter=10000):
 
     return x_1, n+1
 
-
-
-    
+   
 if __name__=='__main__':
     main()
     
